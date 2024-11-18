@@ -90,14 +90,20 @@ def embed(path):
                 txt = ""
                 ctr += 1  # Rotation of character code (next font to use during embedding process)
                 r = p.add_run(char)  # Encoding character from secret
-                r.font.name = fonts[char_code[ctr]]
+                r.font.name = fonts[char_code[ctr]-1]
                 if ctr == 2:  # Rotation of letters within secret
                     ctr = -1
                     idx += 1
                     if idx <= len(secret) - 1:
                         char_code = code_table[secret[idx]]
+                    else:
+                        break
+
             else:
                 txt += char
+        else:
+            continue
+        break
 
     doc.save("Stego_file.docx")
 
@@ -137,11 +143,11 @@ def extract(path):
                 char_code = [0, 0, 0]
                 break
             if fonts_used[x] == fonts[y]:
-                char_code[0] = y
+                char_code[0] = y + 1
             if fonts_used[x+1] == fonts[y]:
-                char_code[1] = y
+                char_code[1] = y + 1
             if fonts_used[x+2] == fonts[y]:
-                char_code[2] = y
+                char_code[2] = y + 1
 
         if tuple(char_code) == (0, 0, 0,):
             break
