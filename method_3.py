@@ -26,6 +26,14 @@ def gather_text(doc):
 
     return "\n\n".join(text), text
 
+def shift_CSM(CSM, group1, char):
+    if char in group1:
+        for key in CSM.keys():
+            CSM[key] = CSM[key][1::] + CSM[key][0]  # Left Circular Shift
+    else:
+        for key in CSM.keys():
+            CSM[key] = CSM[key][-1] + CSM[key][:-1:]  # Right Circular Shift
+
 
 def embed(path):
     cover = Document(path)
@@ -38,11 +46,7 @@ def embed(path):
     # Embedding Procedure
     secret = input("Provide a secret message: ")
     secret += EoS
-    count = 0
 
-    # TODO: Clear all paragraphs from doc and start writing data
-    #   unchanged data should be written like before stego work
-    #   changes have to be written as separate runs
     idx = 0
     x = secret[idx]
     s = CSM[x.upper()]
@@ -52,65 +56,58 @@ def embed(path):
     for paragraph in paragraphs:
         p = doc.add_paragraph()
         for y in paragraph:
-            if idx + 1 < len(secret):
-                print(f"y1: {y}\n")
             if y.upper() in s:
                 if txt != "":
                     r = p.add_run(txt)
-                    r.style.font.size = Pt(def_size)
-                    print(f"check: {r.style.font.size}")
+                    font = r.font
+                    font.size = Pt(def_size)
                     txt = ""
 
                 pos = s.index(y.upper())
-                print(f"pos: {pos}")
-                print(f"y: {y}")
-                print(f"s: {s}\n")
-                print(f"r: {r.style.font.size}")
-
                 r = p.add_run(y)
+                font = r.font
                 match pos:
                     case 0:
-                        r.style.font.size = Pt(def_size - 1)
+                        font.size = Pt(def_size - 1)
                     case 1:
-                        r.style.font.size = Pt(def_size - 2)
+                        font.size = Pt(def_size - 2)
                     case 2:
-                        r.style.font.size = Pt(def_size - 3)
+                        font.size = Pt(def_size - 3)
                     case 3:
-                        r.style.font.size = Pt(def_size + 1)
+                        font.size = Pt(def_size + 1)
                     case 4:
-                        r.style.font.size = Pt(def_size + 2)
+                        font.size = Pt(def_size + 2)
                     case 5:
-                        r.style.font.size = Pt(def_size + 3)
+                        font.size = Pt(def_size + 3)
                     case 6:
-                        r.style.font.size = Pt(def_size + 4)
+                        font.size = Pt(def_size + 4)
 
-                print(f"r2: {r.style.font.size}")
+                #shift_CSM(CSM, group1, x.lower())
 
+                #'''
                 if x.lower() in group1:
                     for key in CSM.keys():
                         CSM[key] = CSM[key][1::] + CSM[key][0]  # Left Circular Shift
                 else:
                     for key in CSM.keys():
                         CSM[key] = CSM[key][-1] + CSM[key][:-1:]  # Right Circular Shift
+                #'''
 
                 if idx + 1 < len(secret):
                     idx += 1
                     x = secret[idx]
                     s = CSM[x.upper()]
                 else:
-                    break
+                    continue
 
             else:
                 txt += y
 
         if txt != "":
             r = p.add_run(txt)
-            r.style.font.size = Pt(def_size)
+            font = r.font
+            font.size = Pt(def_size)
             txt = ""
-
-        else:
-            continue
-        break
 
 
     doc.save("Stego_method3.docx")
@@ -125,31 +122,35 @@ def extract(path, def_size):
 
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
-            size = run.style.font.size
-            if def_size != size:
+            font = run.font
+            size = font.size
+            if Pt(def_size) != size:
                 x = run.text
-                if size == def_size - 1:
+                if size == Pt(def_size - 1):
                     pos = 0
-                elif size == def_size - 2:
+                elif size == Pt(def_size - 2):
                     pos = 1
-                elif size == def_size -3:
+                elif size == Pt(def_size -3):
                     pos = 2
-                elif size == def_size + 1:
+                elif size == Pt(def_size + 1):
                     pos = 3
-                elif size == def_size + 2:
+                elif size == Pt(def_size + 2):
                     pos = 4
-                elif size == def_size + 3:
+                elif size == Pt(def_size + 3):
                     pos = 5
-                elif size == def_size + 4:
+                elif size == Pt(def_size + 4):
                     pos = 6
 
-                pos = "" # Decode from Font Size x CSM String Index
                 for c in CSM.keys():
                     s = CSM[c]
                     if x.upper() not in s:
                         continue
                     if s.index(x.upper()) == pos:
                         secret += c
+                        
+                        #shift_CSM(CSM, group1, c)
+
+                        #'''
                         if c in group1:
                             for key in CSM.keys():
                                 CSM[key] = CSM[key][1::] + CSM[key][0]  # Left Circular Shift
@@ -157,6 +158,7 @@ def extract(path, def_size):
                             for key in CSM.keys():
                                 CSM[key] = CSM[key][-1] + CSM[key][:-1:]  # Right Circular Shift
                             #   verify below
+                        #'''
                     if len(secret) >= 5:
                         if secret[-5::] == EoS:
                             end = True
