@@ -41,6 +41,7 @@ code_table = {
     "y": (3, 3, 1), "z": (3, 3, 2), " ": (3, 3, 3)
 }
 
+# Reversed code_table for finding dict key by associated item i.e. conversion of (1,1,1) to "a"
 reverse_code_table = dict(map(reversed, code_table.items()))
 
 
