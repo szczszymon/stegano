@@ -1,54 +1,102 @@
-import PyPDF2
 from PyPDF2 import PdfWriter, PdfReader
 from PyPDF2.generic import NumberObject
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+import random
+
 
 def create_text_pdf(text, output_filename):
-    """Create a PDF with a single page containing the given text."""
+    # Create a PDF with a single page containing the given text
     c = canvas.Canvas(output_filename, pagesize=letter)
-    c.drawString(100, 750, text)  # Draw text at coordinates (100, 750)
+    c.drawString(100, 750, text)
     c.save()
 
-# Step 1: Read the input PDF
-cover_pdf_path = "ref.pdf"
-cover_reader = PdfReader(cover_pdf_path)
 
-# Step 2: Take user input for the secret message
-secret = input("Enter the secret text: ")
+def embed(files):
+    cover_files = files.split(",")
 
-# Step 3: Create a new PDF with the secret text
-secret_pdf_path = "secret.pdf"
-create_text_pdf(secret, secret_pdf_path)
+    # Cover files segmentation and sanitazation
+    for i in range(len(cover_files)):
+        cover_files[i] = cover_files[i].strip()
 
-# Step 4: Merge the cover and secret PDF
-secret_reader = PdfReader(secret_pdf_path)
-writer = PdfWriter()
+    
+    secret = input("Enter the secret text: ")
 
-# Add all pages from cover.pdf
-for page in cover_reader.pages:
-    writer.add_page(page)
+    secret_ascii = []
+    last_share = []
 
-# Add the single page from secret.pdf
-writer.add_page(secret_reader.pages[0])
+    for char in secret:
+        secret_ascii.append(ord(char))
+        last_share.append(ord(char))
 
-# Write intermediate file to visualize the change
-intermediate_output = "intermediate.pdf"
-with open(intermediate_output, "wb") as f:
-    writer.write(f)
+    shares = []
 
-# Step 5: Modify the page count to simulate removing the last page
-# Get the root object for the PDF
-pages_dict = writer._root_object["/Pages"]
+    for i in range(len(cover_files) - 1):
+        shares.append([])
+        for j in range(len(secret_ascii)):
+            shares[i].append(random.randrange(0, 255))
+            last_share[j] = last_share[j] ^ shares[i][j]
 
-# Adjust the /Count value
-current_count = pages_dict["/Count"]  # This is a PdfObject
-new_count = NumberObject(current_count - 1)  # Decrement and wrap it as NumberObject
-pages_dict.update({"/Count": new_count})  # Update the dictionary
+    shares.append(last_share)
 
-# Write the final stego PDF
-output_pdf_path = "Stego_method4.pdf"
-with open(output_pdf_path, "wb") as f:
-    writer.write(f)
+    # Shares creation is finished
+    # Last_share is appended to the end of shares
+    # Decoding is done by opeartion: Last share XOR share[i] n - 1 times where n is the lenth of shares list
+    # TODO:
+    # Modify current method_4 for singular page hiding to embed 1 share per file
+    # Add extraction func that: reads shares hidden in pdf files and saves to the list then decodes the message by operation mentioned above
+    return None
 
-print(f"PDF with steganography created successfully: {output_pdf_path}")
+    # Create a new PDF with the secret
+    secret_pdf_path = "secret.pdf"
+    create_text_pdf(secret, secret_pdf_path)
+
+    cover_reader = PdfReader(cover_pdf_path)
+
+    # Merge the cover and secret PDF - intermediate.pdf
+    secret_reader = PdfReader(secret_pdf_path)
+    writer = PdfWriter()
+
+    for page in cover_reader.pages:
+        writer.add_page(page)
+    writer.add_page(secret_reader.pages[0])
+
+    # Write intermediate file to visualize the change
+    intermediate_output = "intermediate.pdf"
+    with open(intermediate_output, "wb") as f:
+        writer.write(f)
+
+    # Page count modification
+    pages_dict = writer._root_object["/Pages"]
+    current_count = pages_dict["/Count"]
+    new_count = NumberObject(current_count - 1)
+    pages_dict.update({"/Count": new_count})
+
+    # Write the final stego PDF
+    output_pdf_path = "Stego_method4.pdf"
+    with open(output_pdf_path, "wb") as f:
+        writer.write(f)
+
+    print(f"Stego PDF file created successfully: {output_pdf_path}")
+
+
+def extract(stego_file):
+    return None
+    reader = PdfReader(stego_file)
+
+    total_pages = len(reader.pages)  # Includes the hidden page
+    visible_pages = reader.trailer["/Root"]["/Pages"]["/Count"]  # Visible page count
+
+    if total_pages > visible_pages:
+        hidden_page_index = total_pages - 1
+        hidden_page = reader.pages[hidden_page_index]
+        secret_text = hidden_page.extract_text()
+
+        return secret_text
+    else:
+        print("No hidden page detected in the PDF.")
+        return None
+
+
+embed("ref.pdf, przebieg.pdf")
+print(f"Extracted secret: {extract("Stego_method4.pdf")}")
