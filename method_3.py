@@ -41,8 +41,10 @@ def embed(path):
     cover = Document(path)
     doc = Document()
 
+    # Default font size detection for cover file
+    def_size = cover.paragraphs[0].runs[0].font.size / 12700
+
     # Extraction of document data
-    def_size = 12 # cover.paragraphs[0].style.font.size
     text, paragraphs = gather_text(cover)
 
     # Embedding Procedure
@@ -110,6 +112,19 @@ def embed(path):
 def extract(path, def_size):
     define_vars()
     doc = Document(path)
+
+    # Default font size detection for cover file used
+    for i in range(len(doc.paragraphs)):
+        for j in range(len(doc.paragraphs[i].runs) - 2):
+            size1 = doc.paragraphs[i].runs[j].font.size
+            size2 = doc.paragraphs[i].runs[j+2].font.size
+
+            if size1 == size2:
+                def_size = size1 / 12700
+                break
+        else:
+            continue
+        break
 
     # Extraction Procedure
     secret = ""
