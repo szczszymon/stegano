@@ -81,15 +81,17 @@ def embed(path):
     idx = 0
     char_code = code_table[secret[idx]]
     ctr = -1
+    end = False
 
     # Embedding Procedure
     for paragraph in paragraphs:
         p = doc.add_paragraph()
         for char in paragraph:
-            if char.isupper():
-                r = p.add_run(txt)  # Saving not used text as run
-                r.font.name = def_font
-                txt = ""
+            if char.isupper() and not end:
+                if txt != "":
+                    r = p.add_run(txt)  # Saving not used text as run
+                    r.font.name = def_font
+                    txt = ""
                 ctr += 1  # Rotation of character code (next font to use during embedding process)
                 r = p.add_run(char)  # Encoding character from secret
                 r.font.name = fonts[char_code[ctr]-1]
@@ -99,13 +101,15 @@ def embed(path):
                     if idx <= len(secret) - 1:
                         char_code = code_table[secret[idx]]
                     else:
-                        break
+                        end = True
 
             else:
                 txt += char
-        else:
-            continue
-        break
+
+        if txt != "":
+            r = p.add_run(txt)  # Saving not used text as run
+            r.font.name = def_font
+            txt = ""
 
     doc.save("Stego_method2.docx")
 
@@ -141,14 +145,14 @@ def extract(path):
     for x in range(0, len(fonts_used) - 2, 3):
         char_code = [None, None, None]
         for y in range(3):
-            if fonts_used[0] == fonts_used[1] == fonts_used[2] == def_font:
+            if fonts_used[x] == fonts_used[x + 1] == fonts_used[x + 2] == def_font:
                 char_code = [0, 0, 0]
                 break
             if fonts_used[x] == fonts[y]:
                 char_code[0] = y + 1
-            if fonts_used[x+1] == fonts[y]:
+            if fonts_used[x + 1] == fonts[y]:
                 char_code[1] = y + 1
-            if fonts_used[x+2] == fonts[y]:
+            if fonts_used[x + 2] == fonts[y]:
                 char_code[2] = y + 1
 
         if tuple(char_code) == (0, 0, 0,):
