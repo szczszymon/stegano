@@ -109,7 +109,7 @@ def embed(path):
     doc.save("Stego_method3.docx")
 
 
-def extract(path, def_size):
+def extract(path):
     define_vars()
     doc = Document(path)
 
@@ -174,5 +174,5 @@ def extract(path, def_size):
 
 
 embed("ref_m3.docx")
-sec = extract("Stego_method3.docx", 12)
+sec = extract("Stego_method3.docx")
 print(f"sec: {sec}")
