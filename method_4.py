@@ -50,9 +50,10 @@ def embed(files):
         shares_txt.append(txt)
 
     # Embedding shares data into cover files
-    for cover, i in zip(cover_files, range(1, len(cover_files) + 1)):
-        secret_path = f"secret-{i}.pdf"
-        create_text_pdf(shares_txt[i - 1], secret_path)
+    if len(cover_files) == 1:
+        cover = cover_files[0]
+        secret_path = f"secret-{1}.pdf"
+        create_text_pdf(shares_txt[0], secret_path)
 
         cover_reader = PdfReader(cover)
 
@@ -63,7 +64,7 @@ def embed(files):
             writer.add_page(page)
         writer.add_page(secret_reader.pages[0])
 
-        intermediate_output = f"intermediate-{i}.pdf"
+        intermediate_output = f"intermediate-{1}.pdf"
         with open(intermediate_output, "wb") as f:
             writer.write(f)
 
@@ -72,11 +73,40 @@ def embed(files):
         new_count = NumberObject(current_count - 1)
         pages_dict.update({"/Count": new_count})
 
-        output_pdf_path = f"Stego_method4-{i}.pdf"
+        output_pdf_path = f"Stego_method4-{1}.pdf"
         with open(output_pdf_path, "wb") as f:
             writer.write(f)
 
         print(f"Stego PDF file created successfully: {output_pdf_path}")
+
+    else:
+        for cover, i in zip(cover_files, range(1, len(cover_files) + 1)):
+            secret_path = f"secret-{i}.pdf"
+            create_text_pdf(shares_txt[i - 1], secret_path)
+
+            cover_reader = PdfReader(cover)
+
+            secret_reader = PdfReader(secret_path)
+            writer = PdfWriter()
+
+            for page in cover_reader.pages:
+                writer.add_page(page)
+            writer.add_page(secret_reader.pages[0])
+
+            intermediate_output = f"intermediate-{i}.pdf"
+            with open(intermediate_output, "wb") as f:
+                writer.write(f)
+
+            pages_dict = writer._root_object["/Pages"]
+            current_count = pages_dict["/Count"]
+            new_count = NumberObject(current_count - 1)
+            pages_dict.update({"/Count": new_count})
+
+            output_pdf_path = f"Stego_method4-{i}.pdf"
+            with open(output_pdf_path, "wb") as f:
+                writer.write(f)
+
+            print(f"Stego PDF file created successfully: {output_pdf_path}")
     
 
 def extract(files):
@@ -107,13 +137,17 @@ def extract(files):
 
     # XOR of all shares
     shares = []
-
     for txt in shares_txt:
         shares.append(txt.split(" ")[:-1:])
 
-    for i in range(len(shares) - 1):
-        for j in range(len(shares[i])):
-            shares[-1][j] = int(shares[-1][j]) ^ int(shares[i][j])
+    if len(stego_files) != 1:
+        for i in range(len(shares) - 1):
+            for j in range(len(shares[i])):
+                shares[-1][j] = int(shares[-1][j]) ^ int(shares[i][j])
+    else:
+        for i in range(len(shares[0])):
+            shares[0][i] = int(shares[0][i])
+        
 
     # Decoding message
     secret = ""
@@ -122,6 +156,7 @@ def extract(files):
 
     print(f"Extracted secret: {secret}")
 
-
+embed("ref.pdf")
+extract("Stego_method4-1.pdf")
 embed("ref.pdf, przebieg.pdf")
 extract("Stego_method4-1.pdf, Stego_method4-2.pdf")
