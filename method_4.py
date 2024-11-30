@@ -22,6 +22,7 @@ def embed(files):
     
     secret = input("Enter the secret text: ")
 
+    # Shares creation
     secret_ascii = []
     last_share = []
 
@@ -39,64 +40,88 @@ def embed(files):
 
     shares.append(last_share)
 
-    # Shares creation is finished
-    # Last_share is appended to the end of shares
-    # Decoding is done by opeartion: Last share XOR share[i] n - 1 times where n is the lenth of shares list
-    # TODO:
-    # Modify current method_4 for singular page hiding to embed 1 share per file
-    # Add extraction func that: reads shares hidden in pdf files and saves to the list then decodes the message by operation mentioned above
-    return None
+    # Shares preparation for embedding (2-D list to strings)
+    shares_txt = []
 
-    # Create a new PDF with the secret
-    secret_pdf_path = "secret.pdf"
-    create_text_pdf(secret, secret_pdf_path)
+    for share in shares:
+        txt = ""
+        for item in share:
+            txt += f"{item} "
+        shares_txt.append(txt)
 
-    cover_reader = PdfReader(cover_pdf_path)
+    # Embedding shares data into cover files
+    for cover, i in zip(cover_files, range(1, len(cover_files) + 1)):
+        secret_path = f"secret-{i}.pdf"
+        create_text_pdf(shares_txt[i - 1], secret_path)
 
-    # Merge the cover and secret PDF - intermediate.pdf
-    secret_reader = PdfReader(secret_pdf_path)
-    writer = PdfWriter()
+        cover_reader = PdfReader(cover)
 
-    for page in cover_reader.pages:
-        writer.add_page(page)
-    writer.add_page(secret_reader.pages[0])
+        secret_reader = PdfReader(secret_path)
+        writer = PdfWriter()
 
-    # Write intermediate file to visualize the change
-    intermediate_output = "intermediate.pdf"
-    with open(intermediate_output, "wb") as f:
-        writer.write(f)
+        for page in cover_reader.pages:
+            writer.add_page(page)
+        writer.add_page(secret_reader.pages[0])
 
-    # Page count modification
-    pages_dict = writer._root_object["/Pages"]
-    current_count = pages_dict["/Count"]
-    new_count = NumberObject(current_count - 1)
-    pages_dict.update({"/Count": new_count})
+        intermediate_output = f"intermediate-{i}.pdf"
+        with open(intermediate_output, "wb") as f:
+            writer.write(f)
 
-    # Write the final stego PDF
-    output_pdf_path = "Stego_method4.pdf"
-    with open(output_pdf_path, "wb") as f:
-        writer.write(f)
+        pages_dict = writer._root_object["/Pages"]
+        current_count = pages_dict["/Count"]
+        new_count = NumberObject(current_count - 1)
+        pages_dict.update({"/Count": new_count})
 
-    print(f"Stego PDF file created successfully: {output_pdf_path}")
+        output_pdf_path = f"Stego_method4-{i}.pdf"
+        with open(output_pdf_path, "wb") as f:
+            writer.write(f)
+
+        print(f"Stego PDF file created successfully: {output_pdf_path}")
+    
+
+def extract(files):
+    stego_files = files.split(",")
+
+    # Stego files segmentation and sanitazation
+    for i in range(len(stego_files)):
+        stego_files[i] = stego_files[i].strip()
 
 
-def extract(stego_file):
-    return None
-    reader = PdfReader(stego_file)
+    # Reading shares from PDF files
+    shares_txt = []
 
-    total_pages = len(reader.pages)  # Includes the hidden page
-    visible_pages = reader.trailer["/Root"]["/Pages"]["/Count"]  # Visible page count
+    for file in stego_files:
+        reader = PdfReader(file)
 
-    if total_pages > visible_pages:
-        hidden_page_index = total_pages - 1
-        hidden_page = reader.pages[hidden_page_index]
-        secret_text = hidden_page.extract_text()
+        total_pages = len(reader.pages)  # Includes the hidden page
+        visible_pages = reader.trailer["/Root"]["/Pages"]["/Count"]  # Visible page count
 
-        return secret_text
-    else:
-        print("No hidden page detected in the PDF.")
-        return None
+        if total_pages > visible_pages:
+            hidden_page_index = total_pages - 1
+            hidden_page = reader.pages[hidden_page_index]
+            secret_text = hidden_page.extract_text()
+
+            shares_txt.append(secret_text)
+        else:
+            print(f"No hidden page detected within {file}")
+
+    # XOR of all shares
+    shares = []
+
+    for txt in shares_txt:
+        shares.append(txt.split(" ")[:-1:])
+
+    for i in range(len(shares) - 1):
+        for j in range(len(shares[i])):
+            shares[-1][j] = int(shares[-1][j]) ^ int(shares[i][j])
+
+    # Decoding message
+    secret = ""
+    for code in shares[-1]:
+        secret += chr(code)
+
+    print(f"Extracted secret: {secret}")
 
 
 embed("ref.pdf, przebieg.pdf")
-print(f"Extracted secret: {extract("Stego_method4.pdf")}")
+extract("Stego_method4-1.pdf, Stego_method4-2.pdf")
