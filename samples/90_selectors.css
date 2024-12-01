@@ -1,0 +1,471 @@
+@charset "utf-8";  @font-face{ 
+    font-family: "PTSerif"; 
+     font-style: normal;
+    font-weight: normal; 
+     src: url(../Fonts/PTSerif-Regular.ttf); 
+}
+
+@font-face{ 
+   font-family: "PTSerif";
+   font-style: normal; 
+     font-weight: bold;
+   src: url(../Fonts/PTSerif-Bold.ttf); 
+} 
+
+@font-face{ 
+      font-family: "PTSerif";
+    font-style: italic;
+   font-weight: normal;
+   src: url(../Fonts/PTSerif-Italic.ttf); 
+} 
+
+@font-face{
+     font-family: "PTSerif"; 
+      font-style: italic;
+     font-weight: bold; 
+   src: url(../Fonts/PTSerif-BoldItalic.ttf); 
+} 
+
+@page{ 
+     margin: 20px; 
+     padding: 0; 
+}
+
+nav{
+    display: none;
+}
+
+body{
+     font-family: PTSerif,serif;
+    font-size: 1em;
+    line-height: 1.2em; 
+      margin: 0;
+   padding: 0;
+   text-align: justify; 
+}
+
+p{ 
+      font-size: .88em; 
+   margin: 0;
+    text-align: justify; 
+    text-indent: 1em;
+}
+
+h1,h2,h3{ 
+    font-weight: normal; 
+      line-height: 1.2; 
+     margin-bottom: 2em;
+      margin-top: 1em;
+     text-align: center; 
+} 
+
+a{
+   color: #555; 
+    text-decoration: underline; 
+}
+
+h1 a,h2 a,h3 a,p.nav a{
+    color: #2e2e2e;
+      text-decoration: none;
+      -webkit-text-fill-color: #2e2e2e; 
+} 
+
+p.nav-sz a{ 
+   color: #707070;
+   text-decoration: none; 
+    -webkit-text-fill-color: #707070; 
+}
+
+.t-p h1,.c-p h1,.xmg h1,.colophon h1{
+     display: none;
+}
+
+body.c-p p{ 
+   font-size: .8em; 
+}
+
+.f-p h1,.f-p h2,.f-p h3{
+    display: none; 
+} 
+
+.f-p-h p,.f-p p{ 
+      font-size: .8em;
+     margin-left: 1em; 
+     text-indent: -1em;
+} 
+
+.colophon p{ 
+   font-size: .8em;
+}
+
+.f-p hr{ 
+     size: 2px;
+     text-align: left;
+     text-indent: 0;
+   width: 15%; 
+} 
+
+.sampler{ 
+      margin-top: 1em; 
+    text-indent: 0;
+}
+
+body.cover{ 
+      margin: 0; 
+   padding: 0;
+   text-align: center;
+} 
+
+body.cover h1{
+     display: none; 
+}
+
+body.cover img{ 
+   max-height: 98%; 
+   max-width: 100%; 
+     text-align: center;
+} 
+
+body.toc p.lvl-h1{
+      margin-left: 0; 
+    text-indent: 0; 
+} 
+
+body.toc p.lvl-h2{ 
+   margin-left: 1em;
+      text-indent: 0;
+} 
+
+body.toc p.lvl-h3{
+   margin-left: 2em; 
+   text-indent: 0;
+}
+
+body.toc p.lvl-nav{
+   margin-left: 3em;
+     text-indent: 0; 
+} 
+
+body.toc p.lvl-nav2{
+     margin-left: 4em; 
+      text-indent: 0; 
+} 
+
+body.toc p.lvl-nav3{
+   margin-left: 5em;
+     text-indent: 0; 
+}
+
+body.toc a{
+    color: #2e2e2e; 
+}
+
+body.toc p{ 
+      font-size: .88em;
+     margin-bottom: 6px;
+    text-align: left;
+} 
+
+strong{ 
+      font-weight: bold; 
+}
+
+.strong,.bold-{
+   font-weight: bold;
+}
+
+.xstrong{
+   font-weight: normal; 
+}
+
+em,.em,.italic-{
+    font-style: italic; 
+} 
+
+.xem{
+   font-style: normal;
+} 
+
+.u{ 
+   text-decoration: underline; 
+} 
+
+.l{ 
+     text-align: left;
+}
+
+.r{
+   text-align: right;
+} 
+
+.c{
+   text-align: center; 
+   text-indent: 0;
+}
+
+.j{
+   text-align: justify; 
+} 
+
+.sm{
+    font-size: .75em;
+}
+
+.aster{ 
+      margin-bottom: 1em;
+      margin-top: 1em;
+    text-align: center; 
+     text-indent: 0; 
+}
+
+.kptl-{ 
+     font-size: .85em;
+}
+
+.mt{
+   margin-top: 1em; 
+}
+
+.mt2{
+   margin-top: 2em;
+} 
+
+.mt3{
+      margin-top: 3em; 
+} 
+
+.mt4{ 
+   margin-top: 4em;
+} 
+
+.hmb{ 
+      margin-bottom: .5em; 
+}
+
+.hmt{
+    margin-top: .5em; 
+} 
+
+.ml1{ 
+     margin-left: 1em;
+      text-indent: 0; 
+}
+
+.ml2{
+   margin-left: 3em;
+   text-indent: 0;
+}
+
+.ml4{
+   margin-left: 4em;
+   text-indent: 0;
+}
+
+.mb{
+   margin-bottom: 1em;
+}
+
+.mb2{
+   margin-bottom: 2em;
+}
+
+.mb3{
+   margin-bottom: 2em;
+}
+
+.mb4{
+   margin-bottom: 4em;
+}
+
+.txt-bu1,.txt-bu{
+   margin-left: 1em;
+   text-indent: -0.65em;
+}
+
+.txt-bu2{
+   margin-left: 2em;
+   text-indent: -0.65em;
+}
+
+.txt-bu3{
+   margin-left: 3em;
+   text-indent: -0.65em;
+}
+
+.txt-li1,.txt-li{
+   margin-left: 1.05em;
+   text-indent: -1em;
+}
+
+.txt-li2{
+   margin-left: 2.10em;
+   text-indent: -1em;
+}
+
+.txt-li3{
+   margin-left: 3.05em;
+   text-indent: -1em;
+}
+
+.txt-bw{
+   text-indent: 0;
+}
+
+.txt-w{
+   text-indent: 1em;
+}
+
+.pbb{
+   page-break-before: always;
+}
+
+.pba{
+   page-break-after: always;
+}
+
+.xbpp{
+   page-break-before: avoid;
+}
+
+.xpba{
+   page-break-after: avoid;
+}
+
+table.b{
+   border: 1px solid black;
+   border-collapse: collapse;
+   margin: 1%;
+   width: 99%;
+}
+
+table.b td{
+   border: 1px solid black;
+   padding: 2px;
+   vertical-align: top;
+}
+
+table.xb{
+   border-collapse: collapse;
+   margin: 1%;
+   width: 99%;
+}
+
+table.xb td{
+   padding: 2px;
+   vertical-align: top;
+}
+
+img{
+   max-height: 100%;
+   max-width: 100%;
+   object-fit: contain;
+}
+
+.img{
+   display: block;
+   margin-bottom: 1em;
+   margin-top: 1em;
+   max-height: 90%;
+   text-align: center;
+}
+
+.img-s{
+   display: block;
+   margin-bottom: .1em;
+   margin-top: 1em;
+   max-height: 90%;
+   text-align: center;
+}
+
+.ogr-h{
+   max-height: 70%;
+}
+
+sup{
+   font-size: .65em;
+   line-height: .5;
+   vertical-align: text-top;
+}
+
+sub{
+   font-size: .65em;
+   line-height: .5;
+   vertical-align: text-bottom;
+}
+
+.dc{
+   float: left;
+   font-size: 3em;
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   margin-bottom: -0.131em;
+   margin-right: .05em;
+   margin-top: -0.031em;
+}
+
+@media amzn-kf8{
+.ogr-h{
+   height: 75%;
+}
+span.dc{
+   float: left;
+   font-size: 320%;
+   margin-bottom: -0.3245em;
+   margin-top: -0.3225em;
+}
+}
+
+@media amzn-mobi{
+.ogr-h{
+   height: 75%;
+}
+span.dc{
+   font-size: 3em;
+   font-weight: bold;
+}
+}
+
+h1{
+   font-family: PTSerif,serif;
+   font-size: 1.33em;
+}
+
+div.az_paragraph{
+   color: black;
+   display: none;
+   font-family: 'DejaVuSerif', serif;
+   font-size: 19px;
+   font-weight: bold;
+   margin-bottom: 5px;
+   margin-left: 5px;
+   padding: 10px 0px 0px 0px;
+   padding-bottom: 15px;
+   padding-left: 25px;
+   padding-right: 5px;
+   padding-top: 15px;
+   text-align: center;
+   width: 656px;
+}
+
+.black{
+   color: #010000;
+}
+
+.black2{
+   color: #000001;
+}
+
+.dark-gray{
+   color: #000100;
+}
+
+.dark-gray2{
+   color: #000101;
+}
+
+.reset{
+   margin: 0;
+   padding: 0;
+}
+

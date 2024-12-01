@@ -1,0 +1,308 @@
+@font-face {
+    font-family: "Charis";
+    font-style: normal;
+    font-weight: bold;
+    src: url(../Fonts/charis-bold.ttf);
+  }
+  @font-face {
+    font-family: "Charis";
+    font-style: italic;
+    font-weight: normal;
+    src: url(../Fonts/charis-italic.ttf);
+  }
+  @font-face {
+    font-family: "Charis";
+    font-style: normal;
+    font-weight: normal;
+    src: url(../Fonts/charis.ttf);
+  }
+  @page {
+    margin: 25px;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+  }
+  body {
+    font-size: 1em;
+    line-height: 1.32em;
+    text-align: justify;
+    margin: 0;
+    padding: 0;
+    font-family: "Charis", serif;
+  }
+  h2 {
+    text-align: center;
+    font-weight: normal;
+    margin: 2em auto 3em;
+    line-height: 1.2;
+    font-size: 1.75em;
+  }
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  p {
+    text-indent: 1em;
+    margin: 0;
+    text-align: justify;
+  }
+  .autor-ksiazki {
+    font-family: "Charis", serif;
+    font-size: 1.45em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 3em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  .lbs {
+    font-family: "Charis", serif;
+    font-size: 1.25em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 3em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  .bs {
+    font-family: "Charis", serif;
+    font-size: 1.45em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 3em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  .dedication {
+    padding-top: 0;
+  }
+  .f1 {
+    font-size: 1.25em;
+  }
+  .img {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: block;
+    text-align: center;
+    max-height: 80%;
+  }
+  .inicjal {
+    font-size: 1.45em;
+    font-weight: bold;
+    line-height: 0.5;
+  }
+  .slowo-obcojezyczne, .tytul-dziela, .wyroznienie {
+    font-style: italic;
+    font-weight: normal;
+  }
+  .stop {
+    font-size: 1.2em;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1.2em;
+    text-align: center;
+    text-indent: 0;
+    margin: 1em 0 1em 0;
+  }
+  .tekst-glowny-wyposrodkowany-1-swiatlo-gora, p.tlumacz {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.5em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  body.dedication {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  p.dedykacja {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: right;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  p.podtytul-ksiazki {
+    font-family: "Charis", serif;
+    font-size: 1.17em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  p.tekst-glowny {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-decoration: none;
+    text-indent: 1.08em;
+  }
+  p.tekst-glowny-1-akapit {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  p.tekst-glowny-1-akapit-1-swiatlo-gora {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.5em;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  p.tekst-glowny-1-swiatlo-dol {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 1.5em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-decoration: none;
+    text-indent: 1.08em;
+  }
+  p.tekst-glowny-wyposrodkowany {
+    font-family: "Charis", serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  p.tytul-ksiazki {
+    font-family: "Charis", serif;
+    font-size: 1.5em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  span.wytluszczenie {
+    font-style: normal;
+    font-weight: bold;
+  }
+  body.colophon p {
+    text-indent: 0;
+    font-size: 0.9em;
+    text-align: center;
+  }
+  body.toc li {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-left: 1.08em;
+    text-indent: -1.08em;
+  }
+  body.toc ul {
+    line-height: 1.2;
+    list-style-type: none;
+  }
+  body.colophon p img {
+    margin-top: 5px;
+  }
+  body.toc ul li {
+    margin-bottom: 0.75em;
+    margin-top: 0.75em;
+    list-style-type: none;
+    text-align: left;
+  }
+  body.colophon .strona-redakcyjna {
+    font-family: "Charis", serif;
+    font-size: 0.75em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  body.colophon .strona-redakcyjna-1-swiatlo-gora {
+    font-family: "Charis", serif;
+    font-size: 0.75em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 1.5em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  #uroboros-logo {
+    margin-top: 6em;
+    text-align: center;
+  }
